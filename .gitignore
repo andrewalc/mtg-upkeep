@@ -1,0 +1,8 @@
+.DS_Store
+.idea/*
+dist/electron/*
+dist/web/*
+build/*
+!build/icons
+node_modules/
+!.gitkeep
