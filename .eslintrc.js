@@ -9,8 +9,11 @@ module.exports = {
     node: true
   },
   extends: 'standard',
-  globals: {
-    __static: true
+
+    globals: {
+    __static: true,
+        $: true,
+        jQuery: true
   },
   plugins: [
     'html'
