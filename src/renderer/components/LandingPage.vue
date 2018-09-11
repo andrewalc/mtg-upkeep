@@ -11,8 +11,8 @@
             </b-col>
             <b-col>
               <b-nav-form class="search-bar float-right">
-                <b-form-input size="md" class="mr-sm-2" type="text" placeholder="Begin your Search"/>
-                <b-button size="md" class="my-2 my-sm-0" type="submit">Search</b-button>
+                <b-form-input v-model="searchEntry" @keyup.enter.native="searchCard" size="md" class="mr-sm-2" type="text" placeholder="Begin your Search"/>
+                <b-button size="md" class="my-2 my-sm-0" @click="searchCard">Search</b-button>
               </b-nav-form>
             </b-col>
           </b-row>
@@ -78,6 +78,13 @@
           </b-col>
           <b-col></b-col>
         </b-row>
+        <b-row>
+          <b-col></b-col>
+          <b-col>
+            <img :src="imageUrl"/>
+          </b-col>
+          <b-col></b-col>
+        </b-row>
       </b-container>
     </div>
   </div>
@@ -92,12 +99,15 @@
     'https://www.youtube.com/embed/xLvvgjOVFAM',
     'https://www.youtube.com/embed/PGe7mGtoabc'
   ];
+  const Scry = require('scryfall-sdk');
   export default {
     name: 'landing-page',
     data () {
       return {
         online: false,
-        currentTime: ''
+        currentTime: '',
+        imageUrl: '',
+        searchEntry: ''
       };
     },
     mounted () {
@@ -106,11 +116,6 @@
       setInterval(() => {
         this.updateTime();
       }, 500);
-
-      // GET request
-      this.$http.get('https://api.scryfall.com/cards/named?exact=elvish-mystic').then((response) => {
-        console.log(response);
-      });
     },
     computed: {
       featuredVideo () {
@@ -120,6 +125,15 @@
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link);
+      },
+      searchCard () {
+        Scry.Cards.byName(this.searchEntry, true).then(response => {
+          try {
+            this.imageUrl = response.image_uris.large;
+          } catch (e) {
+            console.warn(`${this.searchEntry} could not be found`);
+          }
+        });
       },
       updateTime () {
         const date = new Date();
