@@ -106,6 +106,11 @@
       setInterval(() => {
         this.updateTime();
       }, 500);
+
+      // GET request
+      this.$http.get('https://api.scryfall.com/cards/named?exact=elvish-mystic').then((response) => {
+        console.log(response);
+      });
     },
     computed: {
       featuredVideo () {
