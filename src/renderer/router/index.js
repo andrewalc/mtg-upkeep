@@ -11,6 +11,11 @@ export default new Router({
       component: require('@/components/LandingPage').default
     },
     {
+      path: '/search-error',
+      name: 'search-error',
+      component: require('@/components/SearchError').default
+    },
+    {
       path: '*',
       redirect: '/'
     }
