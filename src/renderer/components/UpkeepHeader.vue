@@ -4,7 +4,7 @@
             <b-container fluid>
                 <b-row>
                     <b-col>
-                        <h1 class="float-left">
+                        <h1 class="float-left" @click="$router.push('/')">
                             MTG Upkeep
                         </h1>
                     </b-col>
@@ -35,12 +35,49 @@
     </div>
 </template>
 <script>
+  const Scry = require('scryfall-sdk');
   export default {
     name: 'UpkeepHeader',
-    props: {
-      currentTime: {},
-      searchCard: {},
-      searchEntry: {}
+    data () {
+      return {
+        currentTime: '',
+        searchEntry: ''
+      };
+    },
+    mounted () {
+      // window.open('https://www.google.com');
+      // Keep track of time
+      setInterval(() => {
+        this.updateTime();
+      }, 500);
+    },
+    methods: {
+      updateTime () {
+        const date = new Date();
+        const h = date.getHours();
+        const m = date.getMinutes();
+        // const s = date.getSeconds();
+        const suffix = h >= 12 ? 'PM' : 'AM';
+        const minAdj = m < 10 ? `0${m}` : m;
+        this.currentTime = `${((h + 11) % 12 + 1)}:${minAdj} ${suffix}`;
+      },
+      searchCard () {
+        Scry.Cards.byName(this.searchEntry, true).then(response => {
+          try {
+            this.$router.push(
+              {
+                name: 'search-result',
+                params: {
+                  searchResult: response.image_uris.large
+                }
+              }
+            );
+          } catch (e) {
+            console.warn(`${this.searchEntry} could not be found`);
+            this.$router.push('/search-error');
+          }
+        });
+      }
     }
   };
 </script>

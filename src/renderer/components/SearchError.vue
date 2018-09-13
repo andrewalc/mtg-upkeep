@@ -1,17 +1,15 @@
 <template>
-    <header>
-
-    </header>
     <div>
-        <a @click="$router.push('/')">Home</a>
-        <br>
-        KMS
+        <UpkeepHeader></UpkeepHeader>
+        You dun fucked up m8.
     </div>
 </template>
 
 <script>
+  import UpkeepHeader from './UpkeepHeader';
   export default {
-    name: 'SearchError'
+    name: 'SearchError',
+    components: {UpkeepHeader}
   };
 </script>
 

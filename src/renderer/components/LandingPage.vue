@@ -1,7 +1,6 @@
 <template>
   <div>
-      <UpkeepHeader :current-time="currentTime" :search-card="searchCard" :search-entry="searchEntry"/>
-
+      <UpkeepHeader></UpkeepHeader>
     <div class="contents">
       <b-container>
         <b-row id="carousel-row">
@@ -46,13 +45,6 @@
           </b-col>
           <b-col></b-col>
         </b-row>
-        <b-row>
-          <b-col></b-col>
-          <b-col>
-            <img :src="imageUrl"/>
-          </b-col>
-          <b-col></b-col>
-        </b-row>
       </b-container>
     </div>
   </div>
@@ -69,24 +61,13 @@
     'https://www.youtube.com/embed/xLvvgjOVFAM',
     'https://www.youtube.com/embed/PGe7mGtoabc'
   ];
-  const Scry = require('scryfall-sdk');
   export default {
     name: 'landing-page',
     components: {UpkeepHeader},
     data () {
       return {
-        online: false,
-        currentTime: '',
-        imageUrl: '',
-        searchEntry: ''
+        online: false
       };
-    },
-    mounted () {
-      // window.open('https://www.google.com');
-      // Keep track of time
-      setInterval(() => {
-        this.updateTime();
-      }, 500);
     },
     computed: {
       featuredVideo () {
@@ -96,25 +77,6 @@
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link);
-      },
-      searchCard () {
-        Scry.Cards.byName(this.searchEntry, true).then(response => {
-          try {
-            this.imageUrl = response.image_uris.large;
-          } catch (e) {
-            console.warn(`${this.searchEntry} could not be found`);
-            this.$router.push('/search-error');
-          }
-        });
-      },
-      updateTime () {
-        const date = new Date();
-        const h = date.getHours();
-        const m = date.getMinutes();
-        // const s = date.getSeconds();
-        const suffix = h >= 12 ? 'PM' : 'AM';
-        const minAdj = m < 10 ? `0${m}` : m;
-        this.currentTime = `${((h + 11) % 12 + 1)}:${minAdj} ${suffix}`;
       }
     }
   };
