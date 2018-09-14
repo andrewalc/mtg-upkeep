@@ -64,9 +64,13 @@
       searchCard () {
         Scry.Cards.byName(this.searchEntry, true).then(response => {
           try {
+            let name = response.name;
+            name = name.replace(/\s/g, '-');
+            name = name.replace(/,/g, '');
+            name = name.split('//').join('-');
             this.$router.push(
               {
-                path: `/search-result/${response.name}`, query: {cardJSON: response}
+                path: `/search-result/${name}`, query: {json: response}
               }
             );
           } catch (e) {
