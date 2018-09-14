@@ -29,7 +29,7 @@
       };
     },
     mounted () {
-      this.cardURL = this.$route.query.cardURL;
+      this.cardURL = this.$route.query.cardJSON.image_uris.large;
     }
   };
 </script>

@@ -66,7 +66,7 @@
           try {
             this.$router.push(
               {
-                path: `/search-result/${response.name}`, query: {cardURL: response.image_uris.large}
+                path: `/search-result/${response.name}`, query: {cardJSON: response}
               }
             );
           } catch (e) {
