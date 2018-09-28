@@ -10,7 +10,7 @@
           </b-col>
           <b-col>
             <b-nav-form class="search-bar float-right">
-              <b-form-input v-model="searchEntry" @keyup.enter.native="searchCard" size="md"
+              <b-form-input ref="search-bar" v-model="searchEntry" @keyup.enter.native="searchCard" size="md"
                             class="mr-sm-2" type="text" placeholder="Begin your Search"/>
               <b-button size="md" class="my-2 my-sm-0" @click="searchCard">Search</b-button>
             </b-nav-form>
@@ -45,6 +45,8 @@
       };
     },
     mounted () {
+      // Set the focus to the search bar whenever the page loads
+      this.$refs['search-bar'].focus();
       // window.open('https://www.google.com');
       // Keep track of time
       setInterval(() => {
