@@ -3,29 +3,43 @@
     <UpkeepHeader></UpkeepHeader>
     <b-container>
       <b-row>
-        <b-col></b-col>
         <b-col>
           <b-row>
-            <template v-if="images.length < 2">
+            <template v-if="images.length > 1">
               <template v-for="card in images">
                 <b-col>
-                  <img :src="card" />
+                  <img :src="card" style="">
                 </b-col>
               </template>
             </template>
             <template v-else>
               <template v-for="card in images">
+                <b-col></b-col>
                 <b-col>
-                  <img :src="card" style="display: flex; float: left;">
+                  <img :src="card" />
                 </b-col>
+                <b-col></b-col>
               </template>
             </template>
           </b-row>
         </b-col>
-        <b-col></b-col>
       </b-row>
       <b-row>
-        <template v-for="card in images">
+        <template v-if="cJson.hasOwnProperty('card_faces')">
+          <template v-for="cardFace in cJson.card_faces">
+            <b-col class="card-info">
+              <div>
+                <b>{{cardFace.name}} {{cardFace.mana_cost}}</b>
+                <br>
+                <p>{{cardFace.type_line}}</p>
+                <p>{{cardFace.oracle_text}}</p>
+                <p><i>{{cardFace.flavor_text}}</i></p>
+                <p>Artist: {{cardFace.artist}}</p>
+              </div>
+            </b-col>
+          </template>
+        </template>
+        <template v-else>
           <b-col class="card-info">
             <div>
               <b>{{cJson.name}} {{cJson.mana_cost}}</b>
