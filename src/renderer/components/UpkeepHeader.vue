@@ -53,6 +53,23 @@
         this.updateTime();
       }, 500);
     },
+    computed: {
+      suggestedSearch () {
+        let suggestions = [];
+        Scry.Cards.autoCompleteName(this.searchEntry).then((results) => {
+          for (const result of results) {
+            suggestions.push(result);
+            console.log(result);
+            // Bloodscent
+            // Blood Scrivener
+            // Bloodscale Prowler
+            // Burning-Tree Bloodscale
+            // Ghor-Clan Bloodscale
+          }
+        });
+        return suggestions;
+      }
+    },
     methods: {
       updateTime () {
         const date = new Date();
